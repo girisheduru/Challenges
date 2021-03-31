@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Parsing Nested JSON Data in JavaScript</title>
+</head>
+<body>
+    <script>
+    //Sample Test Data
+    var jsonobject1 = `{"a":{"b":{"c":"d"}}}`;
+    var jsonobject2 = `{"x":{"y":{"z":"a"}}}`;
+         
+    // recursive function to get and print nested values
+    function printValue(obj,key) {
+        for(var k in obj) {
+            if(obj[k] instanceof Object && k != key ) {
+              
+              document.write("Parsing the nested Array for KEY "+  key + " --- current key is " + k + " and Value is"+ JSON.stringify(obj[k]) + "<br>");
+              
+              printValue(obj[k],key);
+              
+            } else if (k == key){
+              // Printing the Output key value
+              document.write("Output Value of the Key :"+ key + " is  " + JSON.stringify(obj[k]) + "<br>");
+    document.write("<hr>");
+
+
+            }
+           else{
+              // Printing err
+              document.write("ERRRR: \""+ key + "\" not found <br>");
+  				  document.write("<hr>");
+
+
+            };
+        }
+    };
+      
+      
+    // Parse and call recursive function
+    function parseAndPrint(jsonobj,key) {
+        // Converting JSON object to JS object
+        document.write("Before parsing -- JSON StringiFY" + JSON.stringify(jsonobj) + "<br>");
+    	var obj = JSON.parse(jsonobj);
+       document.write("After parsing -- JSON StringiFY" + JSON.stringify(obj) + "<br>");
+      
+       document.write("Value Required for Key : " + key + "<br>");
+      
+      	printValue(obj,key);
+    };
+    
+    // Test Input with sample set
+    parseAndPrint(jsonobject1,"d");
+    parseAndPrint(jsonobject2, "a");
+
+     
+    </script>
+</body>
+</html>
