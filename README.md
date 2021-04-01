@@ -11,6 +11,8 @@
     5) gcloud app browse<br/>
     6) An URL will be provided to check for its working <br/>
  
+ Code get stored in Cloud Storage and then gets deployed. 
+ 
  Sample Input as in Code : computeMetadata/v1/instance?recursive=true&alt=json <br/>
  URL produced : https://rosy-decker-309304.ew.r.appspot.com
  
