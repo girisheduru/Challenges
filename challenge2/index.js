@@ -10,9 +10,7 @@ const axiosInstance = axios.create({
 });
 
 app.get('/', (req, res) => {
-  let path = req.query.path || 'computeMetadata/v1/';
-
-  axiosInstance.get(path).then(response => {
+  axiosInstance.get('computeMetadata/v1/instance?alt=json').then(response => {
     console.log(response.status)
     console.log(response.data);
     res.send(response.data);
