@@ -1,0 +1,43 @@
+
+resources:
+- name: {{ properties['clusterName'] }}-type
+  type: deploymentmanager.v2beta.typeProvider
+  properties:
+    options:
+      validationOptions:
+        schemaValidation: IGNORE_WITH_WARNINGS
+      inputMappings:
+      - fieldName: name
+        location: PATH
+        methodMatch: ^(GET|DELETE|PUT|PATCH|POST)$
+        value: $.ifNull($.resource.properties.metadata.name, $.resource.name)
+      - fieldName: metadata.name
+        location: BODY
+        methodMatch: ^(PUT|POST)$
+        value: $.ifNull($.resource.properties.metadata.name, $.resource.name)
+      - fieldName: metadata.resourceVersion
+        location: BODY
+        methodMatch: ^(PUT|PATCH)$
+        value: $.ifNull($.resource.properties.metadata.resourceVersion, $.resource.resourceVersion)
+      - fieldName: namespace
+        location: PATH
+        methodMatch: ^(GET|DELETE|PUT|PATCH|POST)$
+        value: $.ifNull($.resource.properties.metadata.namespace, $.resource.namespace)
+      - fieldName: Authorization
+        location: HEADER
+        value: >
+          $.concat("Bearer ", $.googleOauth2AccessToken())
+    collectionOverrides:
+    - collection: '/api/v1/namespaces/{namespace}/services/{name}'
+      options: 
+        inputMappings: 
+        - fieldName: spec.clusterIP
+          location: BODY
+          methodMatch: ^(PUT|PATCH)$
+          value: $.ifNull($.resource.self.spec.clusterIP, $.resource.spec.clusterIP)
+    descriptorUrl: https://$(ref.{{ properties['clusterName'] }}.endpoint)/openapi/v2
+
+
+outputs:
+- name: clusterType
+  value: {{ properties['clusterName'] }}-type

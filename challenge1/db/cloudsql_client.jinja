@@ -1,0 +1,60 @@
+
+
+{% set ID = env['deployment'] + '-' + env['name'] %}
+
+resources:
+- name: {{ ID }}-allow-ssh
+  type: compute.v1.firewall
+  properties:
+    targetTags:
+      - {{ ID }}-ssh
+    allowed:
+    - IPProtocol: tcp
+      ports: 
+        - 22
+
+{% for i in range(properties['clientCount']) %}
+- name: {{ ID }}-{{ i }}
+  type: compute.v1.instance
+  properties:
+    machineType: zones/{{ properties['zone'] }}/machineTypes/{{ properties['machineType'] }}
+    zone: {{ properties['zone'] }}
+    metadata:
+      items:
+        - key: startup-script
+          value: |
+            {{ imports['startup-script']|indent(12) }}
+        {% if properties['cloud-sql-instances'] %}
+        - key: cloud-sql-instances
+          value: {{ properties['cloud-sql-instances'] }}
+        {% endif %}
+    disks:
+      - deviceName: boot
+        boot: true
+        autoDelete: true
+        mode: READ_WRITE
+        type: PERSISTENT
+        initializeParams:
+          diskSizeGb: {{ properties['diskSizeGb'] }}
+          sourceImage: {{ properties['sourceImage' ] }}
+    networkInterfaces:
+      - name: {{ ID }}-eth0
+        network: {{ properties['network'] }}
+        subnetwork: regions/{{ properties['region'] }}/subnetworks/{{ properties['subnet'] }}
+        accessConfigs:
+          - name: eth0
+            type: ONE_TO_ONE_NAT
+    serviceAccounts:
+      - email: {{ properties['serviceAccount'] }}
+        scopes:
+          - 'https://www.googleapis.com/auth/cloud-platform'
+    tags:
+      items:
+        - {{ ID }}-ssh
+{% endfor %}
+
+outputs:
+  {% for i in range(properties['clientCount']) %}
+  - name: client-{{ i }}
+    value: $(ref.{{ ID }}-{{ i }}.networkInterfaces[0].accessConfigs[0].natIP)
+  {% endfor %}

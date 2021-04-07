@@ -1,0 +1,92 @@
+{% set CLUSTER_TYPE      = env['project'] + '/' + properties['clusterType'] %}
+{% set DEPLOYMENT_COLLECTION = '/apis/apps/v1/namespaces/{namespace}/deployments/{name}' %}
+{% set INGRESS_COLLECTION = '/apis/extensions/v1beta1/namespaces/{namespace}/ingresses/{name}' %}
+{% set SERVICE_COLLECTION = '/api/v1/namespaces/{namespace}/services/{name}' %}
+
+resources:
+- name: {{ env['name']  }}-deploy
+  type: {{ CLUSTER_TYPE }}:{{ DEPLOYMENT_COLLECTION }}
+  properties:
+    apiVersion: apps/v1
+    kind: Deployment
+    namespace: {{ properties['namespace'] | default('default') }}
+    metadata:
+      name: {{ env['name'] }}-deploy
+      labels:
+        app: {{ env['name'] }}
+        deployment: {{ env['deployment'] }}
+    spec:
+      replicas: {{ properties['replicas'] | default(2) }}
+      selector:
+        matchLabels:
+          app: {{ env['name'] }}
+          deployment: {{ env['deployment'] }}
+      template:
+        metadata:
+          labels:
+            app: {{ env['name'] }}
+            deployment: {{ env['deployment'] }}
+        spec:
+          containers:
+          - image: {{ properties['image'] }}
+            name: {{ properties['containerName'] }}
+            env:
+            - name: DB_USER
+              valueFrom:
+                secretKeyRef:
+                  name: {{ properties['dbsecret'] }}
+                  key: username
+            - name: DB_PASS
+              valueFrom:
+                secretKeyRef:
+                  name: {{ properties['dbsecret'] }}
+                  key: password
+            - name: DB_NAME
+              valueFrom:
+                secretKeyRef:
+                  name: {{ properties['dbsecret'] }}
+                  key: database
+            ports:
+            - containerPort: {{ properties['targetPort'] }}
+              protocol: TCP
+            imagePullSecrets:
+            - name: {{ properties['regSecret'] }}
+          - name: {{ properties['sccontainerName'] }}
+            image: {{ properties['scimage'] }}
+            imagePullSecrets:
+            - name: {{ properties['regSecret'] }}
+            command:
+              - "/cloud_sql_proxy"
+              - "-instances=rosy-decker-309304:europe-west1:challenge1-db-cloudsql-master=tcp:3306"
+              - "-credential_file=/secrets/credentials.json"
+            securityContext:
+              runAsNonRoot: true
+            volumeMounts:
+            - name: sasecretvolume
+              mountPath: /secrets/
+              readOnly: true
+          volumes:
+          - name: sasecretvolume
+            secret:
+              secretName: sasecret1
+
+- name: {{ env['name']  }}-svc
+  type: {{ CLUSTER_TYPE }}:{{ SERVICE_COLLECTION }}
+  properties:
+    apiVersion: v1
+    kind: Service
+    namespace: {{ properties['namespace'] | default('default') }}
+    metadata:
+      name: {{ env['name']  }}-svc
+      labels:
+        app: {{ env['name'] }}
+        deployment: {{ env['deployment'] }}
+    spec:
+      type: ClusterIP
+      ports:
+      - port: {{ properties['servicePort'] }}
+        targetPort: {{ properties['targetPort'] }}
+      selector:
+        app: {{ env['name'] }}
+        deployment: {{ env['deployment'] }}
+

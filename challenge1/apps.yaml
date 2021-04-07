@@ -1,0 +1,33 @@
+imports:
+- path: templates/frontend.jinja
+  name: frontend.jinja
+
+- path: templates/backend.jinja
+  name: backend.jinja
+
+resources:                             
+- name: frontend
+  type: frontend.jinja        
+  properties:
+    cluster: challenge1-cluster
+    clusterType: challenge1-cluster-type
+    targetPort: 8001
+    servicePort: 8001
+    image: eu.gcr.io/rosy-decker-309304/challengefe:latest
+    containerName: frontend
+    regSecret: gcr-access-token
+
+- name: backend
+  type: backend.jinja        
+  properties:
+    cluster: challenge1-cluster
+    clusterType: challenge1-cluster-type
+    targetPort: 9001
+    servicePort: 9001
+    image: eu.gcr.io/rosy-decker-309304/challengebe:latest
+    sccontainerName: cloud-sql-proxy
+    scimage: eu.gcr.io/rosy-decker-309304/gce-proxy:1.17
+    containerName: backend
+    regSecret: gcr-access-token
+    dbsecret: dbsecret
+    sasecret: sasecret

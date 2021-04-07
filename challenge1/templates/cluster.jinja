@@ -1,0 +1,22 @@
+resources:
+- name: {{ properties['clusterName'] }}
+  type: container.v1.cluster
+  properties:
+    zone: {{ properties['zones'][0] }}
+    cluster:
+      description: {{ properties['description'] }}
+      initialClusterVersion: {{ properties['initialClusterVersion'] }}
+      locations: {{ properties['zones'] }}
+      nodePools:
+      - name: {{ env['name'] }}-pool
+        initialNodeCount: {{ properties['initialNodeCount'] | default(1) }}
+        config:
+          machineType: {{ properties['machineType'] }}
+          oauthScopes:
+          - https://www.googleapis.com/auth/compute
+          - https://www.googleapis.com/auth/devstorage.read_only
+          - https://www.googleapis.com/auth/logging.write
+          - https://www.googleapis.com/auth/monitoring
+        management:
+          autoUpgrade: true
+          autoRepair: true

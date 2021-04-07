@@ -1,0 +1,25 @@
+imports:
+- path: templates/cluster.jinja        
+  name: cluster.jinja
+
+- path: templates/kubeapis.jinja
+  name: kubeapis.jinja
+
+resources:                             
+- name: challenge1-cluster
+  type: cluster.jinja        
+  properties:
+    description: "challenge1 Cluster"
+    clusterName: "challenge1-cluster"
+    machineType: "n1-standard-1"
+    initialClusterVersion: "1.18.16-gke.302"
+    zones:
+    - europe-west1-b
+    - europe-west1-c
+    initialNodeCount: 1
+
+- name: challenge1-cluster-K8sapis
+  type: kubeapis.jinja
+  properties:
+    description: "challenge1 Cluster APIs"
+    clusterName: "challenge1-cluster"

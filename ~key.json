@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "rosy-decker-309304",
+  "private_key_id": "8cf3b5f5e1ec970ab9c93f47f47e53b13723f71a",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQClNbYp1Nu1oDNl\nRcY1g6MxQH6SIF3JRTaC0UCE3oqhfMuAkIBj5ikHMV7D622FT98knjvahk7t0/xs\nsudVVp7pzY8v7TwPHHUr4nge7t8lptUFBqQ0NIOwjVWtsJwrWDgslZzgm7XpwvFS\njr1kfJq8WsHeW0x4H9QeWi3pp/dqgHtKyy2D+SEAU3pBHTwIEFZfbTi5Ohu4skTR\ncaVhC+jZ2pOeoNXKhOFBCnBmPS/+50pLVuZbUpPiyt4ACyVqQ6eNpASUvryGKNRA\nypYpOX2i02JRl9glOfMl98Oh8IIR1WRNjGb9Qds+H8yNIEwtpbvbjUjSzk+qjb/3\nuVZfaX+TAgMBAAECggEAPWwOOVgzhT+1zAGYcv3pdt65D//rjnBml1VPzPZmCSr6\nB+bxbPK9rzhqOKH3Wnh7CESyEQkdICvPreQHwMEPHPK5OQLU8PNOFs5AhZOesANq\nME+rTeN2UHYDdCt0rGLEo8LOC+2oQOwix2RdQpZW+w8tA8vizshalxxE9JlnkZbw\n0gyfPTHJLjlUOPfFgSpgkIsEzyDvIfAZhUanP6nDNRFAuZcGs4jQsFXAhq9+GE8G\n4zJNVagu71Bdp9eVMOGa8k3bRr/lJaeeK7mF6Ef2794DqSW8Esz6Qhe8KBDdgize\na+BlTiLkamup3320NSXCWdCWB4wFiit61IlSK13pcQKBgQDZ+Mei1EWbyd6pIwEv\nN5oKuHGE4ClAlwHE+b/i4djQpY6QbDJuCV4OZaeRRgNRBfq85CLAYS2CH7Y68mfN\nJc8wZCvIyYMYsR8dnEol3XUUku8xoN/aA4BsdTSrZ39Krp11mnqT1+zmZ+PXl29U\nrvAdn83s2gWLlZC6zZh5fn8OUQKBgQDCCG+xuyMya46PCcIbq9+3h72kKPCujZ3d\nw0yTOrY5aZDsLw5Vp/jm5vBcaG7Q/B3lEtf/1qB5cRgP+pedH4gL49QOQGwlIcE5\nfoHx6dYEa6mMBztNd5cAKZgP31FZUCp7nhLxHEiW6h9ayz0CCOIDlcj0F1DpCtq/\nWP86lIrCowKBgGYfceEvFQHdfa2+0cI+ibR2H/GCWLGDTnfsD2QMLlnrBzVRC/uT\n9fZG2FBu/gTLCWPQexupK/ooQ2ewxMNP8Jeahw0GpJ4/9fUYkYDWFhGymdClr9tk\nAppN+4RG9FOYJfvAiaeU5dA5Yn1S3P1PDP7ELWXH7Asu4uUyiDp78qlRAoGBALu4\nh79u6v2D27d9XGODJH0egZYJ2dk2v83mffZPLi9bd89ZM0ghq4hRU6hDjTr5QD74\nvSsSzczQYtRKwFZOREQklmt3XmmKP7PNNhEDB4DdXHpSIMiw89E/bJOmncCH86IH\nbBIDKCOBvPYNfSezyl5nkrS8vhXI35uSkdNuFNV7AoGARh1lxhsVZMzxI/+0etsT\nY1QuX5BGO+VBNY7Uu7zrM2XAB4hjz9zYMbL3Yw4iq4pCt0VqwWhMxLSBQu9E9mUq\nNHetZccXeUvi5Nt5TaswSu4ISJaf1TyeiAMzBhbqcGS5MJHuATekeG2Y4U2C7lJK\nnk9d0+/jlcvYmvaSKVkVYnM=\n-----END PRIVATE KEY-----\n",
+  "client_email": "sasidecar1@rosy-decker-309304.iam.gserviceaccount.com",
+  "client_id": "103281245679402538370",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://oauth2.googleapis.com/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/sasidecar1%40rosy-decker-309304.iam.gserviceaccount.com"
+}
